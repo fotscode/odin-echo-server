@@ -47,7 +47,7 @@ handle_msg :: proc(sock: net.TCP_Socket) {
 		if err_clone != nil {
 			fmt.println("Failed to clone bytes")
 		}
-		fmt.println("Server received [", bytes_recv,"bytes ]: ", message)
+		fmt.println("Server received [", bytes_recv, "bytes ]: ", message)
 		bytes_sent, err_send := net.send_tcp(sock, buffer[:bytes_recv])
 		if err_send != nil {
 			fmt.println("Failed to send data")

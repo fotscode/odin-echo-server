@@ -36,7 +36,7 @@ tcp_cli :: proc(ip: string, port: int) {
 			fmt.println("Failed to receive data")
 			break
 		}
-		fmt.println("Client received [", bytes_recv,"bytes ]: ", string(buf[:bytes_recv]))
+		fmt.println("Client received [", bytes_recv, "bytes ]: ", string(buf[:bytes_recv]))
 	}
 	net.close(sock)
 }
