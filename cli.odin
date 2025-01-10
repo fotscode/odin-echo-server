@@ -42,5 +42,5 @@ tcp_cli:: proc(ip:string, port: int) {
 }
 
 main :: proc() {
-    tcp_cli("192.168.1.87", 8080)
+    tcp_cli("127.0.0.1", 8080)
 }

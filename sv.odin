@@ -74,5 +74,5 @@ tcp_echo_server :: proc(ip:string, port:int){
 }
 
 main :: proc() {
-    tcp_echo_server("192.168.1.87", 8080)
+    tcp_echo_server("127.0.0.1", 8080)
 }
