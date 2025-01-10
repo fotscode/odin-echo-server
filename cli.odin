@@ -23,7 +23,6 @@ tcp_cli:: proc(ip:string, port: int) {
             break
         }
         if (n == 0 || (n==1 && buf[0] == '\n')) {
-            net.close(sock)
             break
         }
         bytesSent, errSend := net.send_tcp(sock, buf[:n])
