@@ -32,27 +32,27 @@ is_telnet_ctrl_c :: proc(bytes: [256]u8, bytes_read: int) -> bool {
 handle_msg :: proc(sock: net.TCP_Socket) {
 	for true {
 		buffer := [256]u8{}
-		bytes, errRecv := net.recv_tcp(sock, buffer[:])
-		if errRecv != nil {
+		bytes_recv, err_recv := net.recv_tcp(sock, buffer[:])
+		if err_recv != nil {
 			fmt.println("Failed to receive data")
 		}
-		if bytes == 0 ||
-		   is_ctrl_d(buffer, bytes) ||
-		   is_empty(buffer, bytes) ||
-		   is_telnet_ctrl_c(buffer, bytes) {
+		if bytes_recv == 0 ||
+		   is_ctrl_d(buffer, bytes_recv) ||
+		   is_empty(buffer, bytes_recv) ||
+		   is_telnet_ctrl_c(buffer, bytes_recv) {
 			fmt.println("Disconnecting client")
 			break
 		}
-		message, errClone := strings.clone_from_bytes(buffer[:])
-		if errClone != nil {
+		message, err_clone := strings.clone_from_bytes(buffer[:])
+		if err_clone != nil {
 			fmt.println("Failed to clone bytes")
 		}
-		fmt.println("Server received: ", message)
-		bytesSent, errSend := net.send_tcp(sock, buffer[:bytes])
-		if errSend != nil {
+		fmt.println("Server received [", bytes_recv,"bytes ]: ", message)
+		bytes_sent, err_send := net.send_tcp(sock, buffer[:bytes_recv])
+		if err_send != nil {
 			fmt.println("Failed to send data")
 		}
-		fmt.println("Server sent: ", message)
+		fmt.println("Server sent [", bytes_sent, "bytes ]: ", message)
 	}
 	net.close(sock)
 }
@@ -74,8 +74,8 @@ tcp_echo_server :: proc(ip: string, port: int) {
 	}
 	fmt.println(strings.concatenate({"Listening on TCP: ", net.endpoint_to_string(endpoint)}))
 	for true {
-		cli, source, err := net.accept_tcp(sock)
-		if err != nil {
+		cli, _, err_accept := net.accept_tcp(sock)
+		if err_accept != nil {
 			fmt.println("Failed to accept TCP connection")
 		}
 		thread.create_and_start_with_poly_data(cli, handle_msg)

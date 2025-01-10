@@ -17,25 +17,26 @@ tcp_cli :: proc(ip: string, port: int) {
 	}
 	for true {
 		buf: [256]u8
-		n, errRead := os.read(os.stdin, buf[:])
-		if errRead != nil {
+		n, err_read := os.read(os.stdin, buf[:])
+		if err_read != nil {
 			fmt.println("Failed to read data")
 			break
 		}
 		if (n == 0 || (n == 1 && buf[0] == '\n')) {
 			break
 		}
-		bytesSent, errSend := net.send_tcp(sock, buf[:n])
-		if errSend != nil {
+		bytes_sent, err_send := net.send_tcp(sock, buf[:n])
+		if err_send != nil {
 			fmt.println("Failed to send data")
 			break
 		}
-		bytes, errRecv := net.recv_tcp(sock, buf[:])
-		if errRecv != nil {
+		fmt.println("Client sent [", bytes_sent, "bytes ]: ", string(buf[:n]))
+		bytes_recv, err_recv := net.recv_tcp(sock, buf[:])
+		if err_recv != nil {
 			fmt.println("Failed to receive data")
 			break
 		}
-		fmt.println("Client received: ", string(buf[:bytes]))
+		fmt.println("Client received [", bytes_recv,"bytes ]: ", string(buf[:bytes_recv]))
 	}
 	net.close(sock)
 }
