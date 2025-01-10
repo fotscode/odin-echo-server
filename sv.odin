@@ -31,7 +31,6 @@ handle_msg :: proc(sock: net.TCP_Socket) {
             fmt.println("Disconnecting client")
             break
         }
-        fmt.println("Server received:",buffer,bytes)
         message, errClone:= strings.clone_from_bytes(buffer[:])
         if  errClone != nil {
             fmt.println("Failed to clone bytes")

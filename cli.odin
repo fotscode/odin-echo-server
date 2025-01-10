@@ -22,7 +22,6 @@ tcp_cli:: proc(ip:string, port: int) {
             fmt.println("Failed to read data")
             break
         }
-        fmt.println("Client sending: ", n)
         if (n == 0 || (n==1 && buf[0] == '\n')) {
             net.close(sock)
             break
