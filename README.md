@@ -2,6 +2,8 @@
 
 This project is a TCP **Echo Server** implemented in the [Odin programming language](https://odin-lang.org/). It is designed to demonstrate and test the capabilities of Odin in handling network communication. It handles multiple client connections.
 
+**UPDATE:** an improved version of this example is implemented in the official repository of [odin-lang/examples](https://github.com/odin-lang/examples), it is located in `net/tcp_echo_server`.
+
 ## What is an Echo Server?
 
 An Echo Server is a simple network server that sends back to the client whatever data it receives. It is often used as a basic example to test networking functionality.
